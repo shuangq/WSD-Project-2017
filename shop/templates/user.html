@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div>
+	<h1 id="greeting" class="center-align">Hello {{ user.first_name }}!</h1>
+</div>
+
+{% for g in user.groups.all %}
+{% if g.name == 'devs' %}
+<div class="row" id="sell_data">
+	<div class="col s12 center-align">
+		<p class="flow-text">Your sells data:</p>
+	</div>
+	<div class="col xl6 offset-xl3 l8 offset-l2 m10 offset-m1 s12">
+		<div class="chart-container">
+			<canvas id="purchase_chart"></canvas>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+<script type="text/javascript">
+$.get({
+	url: "{% url 'purchase_data' %}",
+	success: function (purchaseData) {
+		if(purchaseData.length == 0){
+			$('#sell_data').html(`
+				<div class="col s12 center-align">
+					<p class="flow-text">No sells yet</p>
+				</div>
+			`);
+		}
+		let data = {
+			datasets: [{
+				data: purchaseData.map(x => x.sells),
+				backgroundColor: ['#3366CC','#DC3912','#FF9900','#109618','#990099','#3B3EAC','#0099C6','#DD4477','#66AA00','#B82E2E','#316395','#994499','#22AA99','#AAAA11','#6633CC','#E67300','#8B0707','#329262','#5574A6','#3B3EAC']
+
+			}],
+
+			    // These labels appear in the legend and in the tooltips when hovering different arcs
+			    labels: purchaseData.map(x => x.game__game_name)
+			};
+			let myPieChart = new Chart("purchase_chart",{
+				type: 'bar',
+				data: data,
+				options: {
+					legend: {
+						display: false
+					},
+					scales: {
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+								stepSize : 1,
+							},
+							gridLines: {
+								display: false,
+							}
+						}],
+						xAxes: [{
+							gridLines: {
+								display: false,
+							}
+						}]
+					},
+				}
+			});
+		}
+	});
+</script>
+{% endif %}
+{% endfor %}
+
+{% if games %}
+
+<div>
+	<p id="greeting" class="center-align flow-text">Your games:</p>
+</div>
+
+<div id="games_list" class="row">
+	{% for game in games %}
+	{% include 'game_card.html' %}
+	{% endfor %}
+</div>
+
+{% else %}
+
+<div>
+	<p class="center-align flow-text">No games yet.</p>
+	<p class="center-align flow-text">Go buy some games!</p>
+</div>
+
+{% endif %}
+
+{% for g in user.groups.all %}
+{% if g.name == 'devs' %}
+<div class="fixed-action-btn">
+	<a class="btn-floating btn-large waves-effect waves-light color-p pulse" href="{% url 'new_game' %}"><i class="material-icons">add</i></a>
+</div>
+{% endif %}
+{% endfor %}
+
+{% endblock %}

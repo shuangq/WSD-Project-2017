@@ -1,0 +1,225 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css?family=Quicksand");
+html, body {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-family: "Open sans", sans-serif;
+  font-weight: 300;
+  list-style: none; }
+
+.inline-block {
+  display: inline-block; }
+
+.color-p, .color-p:hover {
+  background-color: #263238; }
+
+.color-imp {
+  background-color: #d84545; }
+
+.text-imp {
+  color: #d84545; }
+
+.bold {
+  font-weight: 400; }
+
+.v-offset {
+  margin-top: 2rem; }
+
+.s12 {
+  display: block; }
+
+@media screen and (max-width: 600px) {
+  .game-basic {
+    display: block; }
+
+  nav .brand-logo {
+    font-size: 1.5rem; } }
+.brand-logo {
+  font-family: "Quicksand", sans-serif; }
+
+.dropdown-content li > a, .dropdown-content li > span {
+  color: #263238; }
+
+.card .chip {
+  margin: 10px 0 0 0; }
+
+.card .chip > i {
+  float: left;
+  margin: 0 8px 0 -12px;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  line-height: 2rem; }
+
+/* FORM START */
+#form {
+  padding: 1.5rem 2rem .5rem; }
+  #form li {
+    list-style: none; }
+  #form .helptext {
+    font-size: 0.7rem;
+    color: #777; }
+  #form .errorlist {
+    font-size: 0.7rem;
+    color: red; }
+  #form input:focus {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important; }
+  #form input[type="submit"] {
+    border: none !important;
+    outline: none; }
+  #form label {
+    font-size: 1rem;
+    color: black; }
+  #form label + .material-icons {
+    font-size: 1rem;
+    vertical-align: middle; }
+  #form .dropdown-content li > a,
+  #form .dropdown-content li > span {
+    color: #263238; }
+
+#group_form .dropdown-content li > a,
+#group_form .dropdown-content li > span {
+  color: #263238; }
+
+#social_login .social {
+  height: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; }
+
+#preview_img {
+  max-width: 50%;
+  max-height: 30vh; }
+
+/* FORM END */
+/* GAME INFO START */
+.game-info .name {
+  margin: 5px 0;
+  margin-right: 10px; }
+.game-info .author {
+  font-size: 1.5rem;
+  color: #999; }
+.game-info .categories {
+  margin-bottom: 16px; }
+  .game-info .categories .chip {
+    font-weight: lighter; }
+.game-info .price {
+  font-size: 2rem; }
+.game-info .btn {
+  margin-right: 20px; }
+
+/*@TODO: Use media query instead of setting the margin of both */
+.game-record .label {
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 2.5rem; }
+.game-record .highscore {
+  font-size: 3rem; }
+.game-record .rank {
+  font-size: 2rem; }
+.game-record .board {
+  padding: 10px; }
+  .game-record .board .highscore-cont {
+    position: relative;
+    width: 15rem;
+    max-width: 100%;
+    margin: 0 auto;
+    border-radius: 50%; }
+  .game-record .board .highscore-cont::before {
+    content: " ";
+    float: left;
+    padding-bottom: 100%; }
+  .game-record .board .highscore-cont::after {
+    clear: left;
+    content: " ";
+    display: table; }
+  .game-record .board .rank-cont {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%; }
+  .game-record .board .highscore, .game-record .board .rank {
+    width: 100%; }
+  .game-record .board .share {
+    margin: 2rem 0; }
+    .game-record .board .share .twitter-share-button, .game-record .board .share .fb-share-button, .game-record .board .share .tg-share-button {
+      vertical-align: middle; }
+    .game-record .board .share .tg-share-button {
+      display: inline-block;
+      height: 28px;
+      background-color: #368CB6;
+      border-radius: 3px;
+      color: white;
+      font-size: 13px;
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 500;
+      line-height: 28px;
+      padding: 0 6px;
+      vertical-align: middle; }
+      .game-record .board .share .tg-share-button i {
+        vertical-align: -4px;
+        margin-right: 2px; }
+    .game-record .board .share .tg-share-button:hover {
+      background-color: #2a7091; }
+.game-record .records td {
+  width: 50%; }
+
+.game-rank table {
+  font-size: 18px; }
+  .game-rank table th {
+    font-size: 20px; }
+
+.game-info .btn {
+  margin-right: 20px;
+  margin-top: 20px; }
+
+.monospace {
+  font-family: "Lucida Console", Monaco, monospace; }
+
+.monospace i {
+  line-height: 1rem;
+  vertical-align: middle; }
+
+.color-p table.highlight tbody tr:hover {
+  background-color: #37474f; }
+
+/* GAME INFO END */
+h1#greeting::before {
+  content: ' ';
+  display: inline-block;
+  width: 4.2rem;
+  height: 4.2rem;
+  margin-right: .5rem;
+  background: url(https://thumbs.gfycat.com/JealousScratchyFreshwatereel-size_restricted.gif) no-repeat center center/100% 100%;
+  vertical-align: bottom; }
+
+/* USER END */
+/* HOME PAGE START */
+#games_list .card {
+  display: flex;
+  flex-direction: column; }
+  #games_list .card .card-title {
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.7));
+    width: 100%; }
+  #games_list .card .game_icon {
+    object-fit: cover;
+    height: 100%; }
+  #games_list .card .card-image {
+    flex: 3;
+    max-height: none !important; }
+  #games_list .card .card-action {
+    flex: 1;
+    position: static !important; }
+
+/* HOME PAGE END */
+#game-frame {
+  width: 100%;
+  height: 70vh;
+  border: none;
+  box-sizing: border-box; }
+
+/*# sourceMappingURL=main.css.map */

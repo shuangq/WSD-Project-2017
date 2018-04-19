@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <form method="POST" id="form" class="col xl6 offset-xl3 l8 offset-l2 m10 offset-m1 s12 card" enctype="multipart/form-data">{% csrf_token %}
+        {{ form.as_ul }}
+        <div class="card-action center-align">
+            <input type="submit" name="Sign-up" id="submit_signup" class="waves-effect waves-light btn color-p" value="{{ button_text|default:'submit' }}" />
+        </div>
+    </form>
+
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // select
+        $('li>select').prepend('<option value="" disabled selected>{{ select_text }}</option>')
+                     .parent().addClass('input-field').find('label').remove();
+        $('select').material_select();
+
+        // textarea
+        $('textarea').addClass('materialize-textarea');
+
+        // tooltip
+        let hp = $('#form>li').find('.helptext');
+        hp.each(x =>{
+            let c = $(hp[x]);
+            let field = c.siblings('label').after(`
+                <i class="material-icons tooltipped" data-position="right" data-html="true" data-delay="50" data-tooltip="`+c.html()+`">help</i>`);
+            c.remove();
+        });
+        $('.tooltipped').tooltip({delay: 50});
+      });
+</script>
+{% endblock %}

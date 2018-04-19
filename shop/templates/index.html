@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="input-field col m6 s8">
+    <input placeholder="Search" id="search_content" type="text" class="autocomplete">
+  </div>
+
+  <div class="input-field col s2 m1">
+    <a class="btn-floating btn-large waves-effect waves-light red"  id="search_bu"><i class="material-icons">search</i></a>
+  </div>
+
+  <div class="input-field col s2 m1">
+    <label id="exception"></label>
+  </div>
+
+  <div class="col s12 m4">
+    <select class="input-field" id="type_selector">
+      <option value disabled selected>Filter category</option>
+      <option value >All</option>
+      {% for c in categories %}
+      <option value="{{ c.id }}" rel="{{ c.category|slugify }}">{{ c.category }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+<div id="games_list" class="row card_grid">
+
+  <div class="center-align">
+    <div class="progress white">
+      <div class="indeterminate blue-grey darken-4"></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="center-align">
+  <ul class="pagination">
+    <li id="left-arrow" class="disabled"><a><i class="material-icons waves-effect">chevron_left</i></a></li>
+
+    {% for n in pages %}
+    <li class="page {% if forloop.first %}disabled{% endif %} waves-effect" id="pag_{{ n }}"><a class="pag">{{ n }}</a></li>
+    {% endfor %}
+    <li class="waves-effect" id="right-arrow"><a><i class="material-icons">chevron_right</i></a></li>
+  </ul>
+</div>
+
+<script type="text/javascript">
+  function games_list(data) {
+    $.get({
+      url: "/gameslist",
+      data: data,
+    }).done(function(d) {
+      if('message' in d){
+        Materialize.toast(d.message, 4000, 'rounded');
+      } else if(d.games.length == 0){
+        Materialize.toast('No such games!', 4000, 'rounded');
+      } else{
+        $('#games_list').empty();
+        let pag_template = '<li class="waves-effect"><a class="pag">#pag#</a></li>'
+        let card_template = `
+          <div class="col s12 m6 l4 xl3" rel="#categories#">
+            <div class="card small hoverable">
+              <a class="card-image valign-wrapper" href="#url#">
+                <img class="game_icon" src="https://s3.eu-central-1.amazonaws.com/panda-shop/external_files/game_icons/#icon#" onerror="this.onerror=null;this.src='{% static 'img/error.png' %}';">
+                <span class="card-title">#title#</span>
+              </a>
+              <div class="card-action">
+                <div class="right-align">
+                  #purchases# playing
+                </div>
+                <div class="right-align">
+                  by #author#
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        let url = "{% url 'gameinfo' game_id=0 %}";
+        for(let game in d.games){
+          let g = d.games[game];
+          console.log(g);
+          let card = card_template.slice(0)
+                                  .replace('#categories#', g.categories)
+                                  .replace('#url#', url.replace(/[0-9]+/,g.id))
+                                  .replace('#icon#', g.icon)
+                                  .replace('#title#', g.game_name)
+                                  .replace('#author#', g.author)
+                                  .replace('#purchases#', g.n_purchases +
+                                           (g.n_purchases!=1? ' people':' person'));
+          $('#games_list').append($(card));
+        }
+        let p = $('.pag');
+        p.hide();
+        for(let i in d.pages){
+          p.eq(i).show();
+        }
+        let tp = d.this_page;
+        console.log(tp,'of',d.pages.length);
+        if(d.pages.length == 1){
+          $('.pagination').hide();
+        } else{
+          $('.pagination').show();
+          console.log('----------------------')
+          console.log($('.page'))
+          $('.page').removeClass('disabled');
+          if(tp == 1){
+            $('#left-arrow').addClass('disabled');
+            $('#right-arrow').removeClass('disabled');
+            $('.page').first().addClass('disabled');
+          }
+          if(tp == d.pages.length){
+            $('#right-arrow').addClass('disabled');
+            $('#left-arrow').removeClass('disabled');
+            $('.page').last().addClass('disabled');
+          } if(tp != d.pages.length && tp != 1){
+            $('#right-arrow').removeClass('disabled');
+            $('#left-arrow').removeClass('disabled');
+            $('.page').eq(tp-1).addClass('disabled');
+          }
+        }
+      }
+    });
+  }
+
+  $('#type_selector').change(x => {
+    let data = {'category': $(x.target).val()};
+    games_list(data);
+  });
+
+  $('#search_content').change(x =>{
+    let data = {'search': $(x.target).val()};
+    games_list(data);
+  });
+
+  $('#search_bu').click(x => {
+    let data = {'search': $('#search_content').val()};
+    games_list(data);
+  });
+
+  $(document).on('click', '.pag', function(x){
+    if(!$(x.target).closest('li').hasClass('disabled')){
+      let data = {
+        'category': $('#type_selector').val(),
+        'page'    : $(x.target).html(),
+      };
+      games_list(data);
+    }
+  }).on('click', '#left-arrow', function(x){
+    if(!$(x.target).closest('li').hasClass('disabled')){
+      console.log($(x.target));
+      $('.pag').closest('li').removeClass('disabled');
+      console.log($(x.target));
+      let data = {
+        'category': $('#type_selector').val(),
+        'page'    : 1,
+      };
+      games_list(data);
+    }
+  }).on('click', '#right-arrow', function(x){
+    if(!$(x.target).closest('li').hasClass('disabled')){
+      $('.pag').closest('li').removeClass('disabled');
+      let data = {
+        'category': $('#type_selector').val(),
+        'page'    : $('.pag').length,
+      };
+      games_list(data);
+    }
+  });
+
+
+  $(document).ready(function () {
+
+    $('select').material_select();
+
+    $('input.autocomplete').autocomplete({
+      data: {
+        {% for g in game_names %}"{{ g.game_name }}": null,{% endfor %}
+
+      },
+      limit: 5,
+      onAutocomplete: function(val) {
+        games_list({'search': val});
+      },
+      minLength: 1,
+    });
+    games_list({});
+  });
+
+</script>
+
+
+{% endblock %}

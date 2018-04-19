@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+  <h1 class="center-align"><a href="{% url 'gameinfo' game_id=game.id %}" class="blue-grey-text text-darken-4">{{ game.game_name }}</a></h1>
+</div>
+
+<div class="card center-align" id="game-card">
+  <iframe id="game-frame" src="{{ game.link }}"></iframe>
+</div>
+
+<script type="text/javascript">
+
+  $(document).ready(function() {
+
+    'use strict';
+    $(window).on('message', function(evt) {
+      var data = evt.originalEvent.data;
+      let url = "{% url 'gamemessage' game_id=game.id %}"
+      switch(data.messageType) {
+        case 'SCORE':
+          $.get(
+            url,
+            data,
+            data => Materialize.toast(JSON.parse(data).info, 4000, 'rounded')
+          );
+          break;
+        case 'SAVE':
+          let gs = data.gameState;
+          data.gameState = JSON.stringify(gs);
+          $.get(
+            url,
+            data,
+            data => Materialize.toast(JSON.parse(data).info, 4000, 'rounded')
+          );
+          break;
+        case 'LOAD_REQUEST':
+          $.get(
+            url,
+            data,
+            data => {
+              let d = JSON.parse(data)
+              if(d.messageType == 'LOAD'){
+                let state = d.gameState.replace(/\'/g, '"');
+                d.gameState = JSON.parse(state);
+              }
+              let x = document.getElementById("game-frame").contentWindow;
+              let r = x.postMessage(d, '*');
+            }
+          );
+          break;
+        case 'SETTING':
+          $('#game-frame').outerHeight(data.options.height+'px');
+          $('#game-frame').outerWidth(data.options.width+'px');
+          break;
+        default:
+      }
+
+    });
+
+
+  });
+</script>
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% load staticfiles %}
+{% include 'form.html' %}
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    // file
+    let file_input = $('li>input[type=file]');
+    let new_input = $(
+      `
+        <div class="file-field input-field">
+          <div class="btn color-p">
+            <span>File</span>
+            <input type="file" accept="image/*">
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+        `
+    );
+    let imgPreview = $(`
+        <div class="img-preview center-align">
+          <img id="preview_img" src="https://s3.eu-central-1.amazonaws.com/panda-shop/external_files/game_icons/{{form.icon.value }}" onerror="this.onerror=null;this.src='{% static 'img/error.png' %}';"/>
+        </div>
+          `);
+
+    new_input.append(imgPreview);
+    new_input.prepend($('li>input[type=file]').siblings('.errorlist'));
+
+    let file = file_input.parent();
+    file.html(new_input);
+    file.find(new_input).find('input[type=file]')
+      .attr('id', file_input.attr('id'))
+      .attr('name', file_input.attr('name'));
+
+    $(document).on('change', '#' + file_input.attr('id'), function(e) {
+      let reader = new FileReader();
+      reader.onloadend = function() {
+        $('#preview_img').attr('src', reader.result);
+      };
+      let file = $('input[type=file]').prop('files')[0];
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    });
+
+  });
+</script>

@@ -1,0 +1,24 @@
+{% with button_text="Log-in"%}
+{% include 'form.html' %}
+{% endwith %}
+<div id="social_login" class="container">
+
+	<p class="flow-text center-align">OR</p>
+	<div class="center-align row">
+		<a class="waves-effect waves btn-large white black-text" href="{% url 'social:begin' backend='google-plus' %}">
+			<div class="valign-wrapper social">
+				<img src="https://google-developers.appspot.com/identity/sign-in/g-normal.png" alt="" height="60%">
+				Log-in with google
+			</div>
+		</a>
+	</div>
+	<div class="center-align row">
+		<a class="waves-effect waves btn-large white black-text" href="{% url 'social:begin' backend='github' %}">
+			<div class="valign-wrapper social">
+				<img src="https://assets-cdn.github.com/images/modules/logos_page/GitHub-Mark.png" alt="" height="60%">
+				Log-in with github
+			</div>
+		</a>
+	</div>
+
+</div>

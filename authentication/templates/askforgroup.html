@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="POST" id="group_form">
+  <div class="input-field col s12 m6">
+    <h4 class="center-align">Please select your user group:</h4>
+    <select name="group">
+      <option value disabled selected>Select Group</option>
+      <option value="devs">Developers</option>
+      <option value="players">Players</option>
+    </select>
+    <button type="submit" for="group_form" class="btn color-p">SUBMIT</button>
+  </div>
+</form>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('select').material_select();
+  });
+</script>
+
+{% endblock %}

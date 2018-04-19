@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<div class="col s12 m6 l4 xl3" rel="
+	{% for c in categories %}
+	{{ c.category.category }},
+	{% endfor %}
+	">
+	<div class="card small hoverable">
+		<a class="card-image valign-wrapper" href="{% url 'gameinfo' game_id=game.id %}">
+			<img class="game_icon" src="https://s3.eu-central-1.amazonaws.com/panda-shop/external_files/game_icons/{{ game.icon }}" onerror="this.onerror=null;this.src='{% static 'img/error.png' %}';">
+			<span class="card-title">{{ game.game_name|default:'Game name' }}</span>
+		</a>
+		<div class="card-action">
+            <div class="right-align">
+				{{ game.n_purchases|default:0 }}
+				{% ifequal game.n_purchases 1 %}
+				person
+				{% else %}
+				people
+				{% endifequal %}
+playing
+            </div>
+			<div class="right-align">
+				{% if game.dev %}
+				<div class="chip">
+					<i class="material-icons center-align light-green">code</i>
+					Author
+				</div>
+				{% else %}
+				<div class="right-align">
+					by {{ game.author }}
+				</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>

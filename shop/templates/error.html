@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Something is wrong, try to do it again</h1>
+ <a  class="btn" href="{% url 'gameinfo' game.id %}">Try Again</a>
+{% endblock %}

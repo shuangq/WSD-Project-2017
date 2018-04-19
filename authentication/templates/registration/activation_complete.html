@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p class="flow-text">Congratulations! You are activated now!</p>
+<script type="text/javascript">
+  window.location.href = "{% url 'profile' %}";
+</script>
+{% endblock %}

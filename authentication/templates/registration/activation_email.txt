@@ -1,0 +1,7 @@
+Dear {{user.username}},
+
+Please activate your account on PandaGame by clicking this link:
+http://{{site}}{% url 'registration_activate' activation_key=activation_key %}
+
+Yours,
+Panda
