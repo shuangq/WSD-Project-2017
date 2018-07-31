@@ -1,19 +1,14 @@
 2017-2018 (CS-C3170) Web Software Development Project
 -----------------------
-### 0. Instruction
+### Instruction
 [Heroku link here](https://wsd2017.herokuapp.com/)    
 To test the site as a developer, you can use the test account below:
 > username: `panda`    
 > password: `spamspam`
 
 You can also signup as a new user/developer.
-### 1. Team
 
-* 605117 Shuang Qiu
-* 664242 Marco Zugliani
-* 605353 Xin Zhao
-
-### 2. Goal
+### Goal
 
 In this project, we implement an **online game store for JavaScript games**.
 
@@ -21,10 +16,10 @@ The service has two types of users, i.e. players and developers.
 Developers can link their implemented games to the service and set a price for them.
 Players can purchase games on the platform and then play them online.
 
-#### 2.1 DB Schema
+#### DB Schema
 ![Database Models](img/schema.png)
 
-#### 2.2 Pages
+#### Pages
 
  - Homepage
    - List of games
@@ -48,7 +43,7 @@ Players can purchase games on the platform and then play them online.
  - Game Sharing Page
    - Share highscore to friends
 
-### 3. Implementation
+### Implementation
 #### Authentication (200/200p):
  - Login, logout and register (both as player or developer) including Email validation 
  - Use Django auth 
@@ -167,32 +162,7 @@ Enable sharing games & game scores on some social media sites.
 We feel that we were successful in implementing all the features required, as well as some bonus features. The service is working fluently with a good-looking interface. 
 We had some issues integrating the third-party REST framework at first, therefore we had to build some work-arounds to customize it to our needs.
 
-### 4. Task Division
-We designed the user interface together and then further divide the implementation tasks into
-3 parts. 
-
-- Marco
-   - set-up repository and Heroku
-   - most of the views
-   - some test cases
-   - authentication (django and social)
-   - sudoku
-   - integration with AWS S3
-
-- Shuang
-   - styling
-   - email authentication
-   - some model queries
-   - some views
-   - some test cases
-
-- Xin 
-   - model design and model test
-   - draft of index page using html, css and javascript
-   - integration with payment service
-
-
-### 5. Testing
+### Testing
 We focus on the following 4 types of tests:
 
 - Unit Testing
