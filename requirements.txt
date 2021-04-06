@@ -9,7 +9,7 @@ Django==2.0.2
 django-braces==1.12.0
 django-cors-middleware==1.3.1
 django-oauth-toolkit==1.0.0
-django-registration==2.4.1
+django-registration==3.1.2
 django-rest-framework-social-oauth2==1.1.0
 djangorestframework==3.7.7
 docutils==0.14
