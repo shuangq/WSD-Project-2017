@@ -17,7 +17,7 @@ gunicorn==19.7.1
 idna==2.6
 jmespath==0.9.3
 oauthlib==2.0.6
-Pillow==5.0.0
+Pillow==9.0.0
 psycopg2==2.7.3.2
 PyJWT==1.5.3
 python-dateutil==2.6.1
